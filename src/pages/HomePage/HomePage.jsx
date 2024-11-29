@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
 import styles from './HomePage.module.css';

@@ -1,5 +1,6 @@
-/* eslint-disable no-undef */
-import { Suspense } from 'react';
+
+
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import { HomePage } from './pages/HomePage/HomePage';
