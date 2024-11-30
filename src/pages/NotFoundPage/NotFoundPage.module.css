@@ -1,0 +1,20 @@
+.notFoundPage {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 50px;
+}
+
+.notFoundPage h1 {
+    font-size: 3rem;
+    color: #333;
+}
+
+.notFoundPage a {
+    text-decoration: none;
+    color: #ff6347;
+    font-size: 1.2rem;
+}
+
+.notFoundPage a:hover {
+    color: #ff4500;
+}
