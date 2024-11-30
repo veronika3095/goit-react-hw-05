@@ -4,7 +4,7 @@ import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
 import styles from './HomePage.module.css'; 
 
-const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NDk3ZWE4NDJhNGFkYWUzYzg1OWNjZjQyYjczODU3NyIsIm5iZiI6MTczMjg4NjUzMy44Niwic3ViIjoiNjc0O WMwMDViM2QzZWI5MzNiYTI1YzQwIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.ugqrCzp0YXVcQN8KaAhEo6-KSW_rp9OtnPV9u_HvCDU';
+const API_KEY = '9497ea842a4adae3c859ccf42b738577';
 const API_URL = 'https://api.themoviedb.org/3';
 
 export function HomePage() {
