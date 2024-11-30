@@ -10,17 +10,29 @@ const API_URL = 'https://api.themoviedb.org/3';
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     axios
       .get(`${API_URL}/movie/${movieId}`, {
-        headers: { Authorization: `Bearer ${API_KEY}` },
+        params: {
+          api_key: API_KEY,
+          language: 'en-US',
+        },
       })
-      .then(response => setMovieDetails(response.data))
-      .catch(error => console.error('Error fetching movie details:', error));
+      .then(response => {
+        setMovieDetails(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError('Error fetching movie details.');
+        setLoading(false);
+      });
   }, [movieId]);
 
-  if (!movieDetails) return <div>Loading movie details...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className={styles.movieDetails}>
@@ -31,9 +43,13 @@ export default function MovieDetailsPage() {
         className={styles.moviePoster}
       />
       <p>{movieDetails.overview}</p>
-      <Link to="cast">View Cast</Link>
-      <Link to="reviews">View Reviews</Link>
-      <Outlet />
+
+      <div className={styles.additionalInfo}>
+        <h3>More Information</h3>
+        <Link to="cast">View Cast</Link> | <Link to="reviews">View Reviews</Link>
+      </div>
+
+      <Outlet /> {}
     </div>
   );
 }

@@ -16,34 +16,39 @@ export default function MovieCast() {
   useEffect(() => {
     axios
       .get(`${API_URL}/movie/${movieId}/credits`, {
-        headers: { Authorization: `Bearer ${API_KEY}` },
+        params: {
+          api_key: API_KEY,
+          language: 'en-US',
+        },
       })
       .then(response => {
-        setCast(response.data.cast);
+        setCast(response.data.cast); 
         setLoading(false);
       })
       .catch(error => {
-        console.error('Error fetching cast:', error);
         setError('Error fetching cast.');
         setLoading(false);
       });
   }, [movieId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading cast...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div className={styles.cast}>
       <h3>Cast</h3>
-      {cast.length > 0 ? (
-        <ul>
-          {cast.map(actor => (
-            <li key={actor.id}>{actor.name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No cast information available.</p>
-      )}
+      <ul>
+        {cast.map(actor => (
+          <li key={actor.id}>
+            <img
+              src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+              alt={actor.name}
+              className={styles.actorImage}
+            />
+            <p>{actor.name}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

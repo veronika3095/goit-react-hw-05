@@ -26,12 +26,9 @@ export function MoviesPage() {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    if (!query.trim()) {
-      setError('Please enter a movie name');
-      return;
-    }
     setLoading(true);
     setError('');
+    setMovies([]);  
     fetchMovies(query)
       .then(response => {
         setMovies(response.data.results); 
@@ -58,6 +55,11 @@ export function MoviesPage() {
 
       {loading && <p>Loading...</p>}  
       {error && <p>{error}</p>} 
+
+      {}
+      {!loading && !error && query && movies.length === 0 && (
+        <p>No movies found.</p>
+      )}
 
       <MovieList movies={movies} />  
     </div>

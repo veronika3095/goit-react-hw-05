@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
-import styles from './HomePage.module.css'; 
+import styles from './HomePage.module.css';
 
 const API_KEY = '9497ea842a4adae3c859ccf42b738577';
 const API_URL = 'https://api.themoviedb.org/3';
@@ -13,7 +13,10 @@ export function HomePage() {
   useEffect(() => {
     axios
       .get(`${API_URL}/trending/movie/day`, {
-        headers: { Authorization: `Bearer ${API_KEY}` },
+        params: {
+          api_key: API_KEY,
+          language: 'en-US',
+        },
       })
       .then(response => setMovies(response.data.results))
       .catch(error => console.error('Error fetching movies:', error));
