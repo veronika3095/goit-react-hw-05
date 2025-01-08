@@ -1,41 +1,43 @@
-/* eslint-disable no-unused-vars */
-import { useParams, Link, Outlet } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, Link, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './MovieDetailsPage.module.css';
 
-const API_KEY = '9497ea842a4adae3c859ccf42b738577';
-const API_URL = 'https://api.themoviedb.org/3';
 
-export default function MovieDetailsPage() {
+const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
+  
   useEffect(() => {
-    axios
-      .get(`${API_URL}/movie/${movieId}`, {
-        params: {
-          api_key: API_KEY,
-          language: 'en-US',
-        },
-      })
-      .then(response => {
+    const fetchMovieDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${movieId}?api_key=9497ea842a4adae3c859ccf42b738577&language=en-US`
+        );
         setMovieDetails(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError('Error fetching movie details.');
-        setLoading(false);
-      });
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      }
+    };
+
+    fetchMovieDetails();
   }, [movieId]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  
+  const handleBack = () => {
+    navigate(-1);  
+  };
+
+  if (!movieDetails) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={styles.movieDetails}>
+      <button onClick={handleBack} className={styles.backButton}>Back</button>
+      
       <h1>{movieDetails.title}</h1>
       <img
         src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
@@ -49,7 +51,9 @@ export default function MovieDetailsPage() {
         <Link to="cast">View Cast</Link> | <Link to="reviews">View Reviews</Link>
       </div>
 
-      <Outlet /> {}
+      <Outlet /> 
     </div>
   );
-}
+};
+
+export default MovieDetailsPage;
