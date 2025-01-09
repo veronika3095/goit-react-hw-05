@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, Outlet, useNavigate } from 'react-router-dom';
+import { useParams, Link, Outlet, useNavigate, useLocation } from 'react-router-dom'; 
 import axios from 'axios';
 import styles from './MovieDetailsPage.module.css';
-
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); 
 
-  
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -27,7 +26,11 @@ const MovieDetailsPage = () => {
 
   
   const handleBack = () => {
-    navigate(-1);  
+    if (location.state?.from) {
+      navigate(location.state.from); 
+    } else {
+      navigate(-1);  
+    }
   };
 
   if (!movieDetails) {
@@ -51,7 +54,7 @@ const MovieDetailsPage = () => {
         <Link to="cast">View Cast</Link> | <Link to="reviews">View Reviews</Link>
       </div>
 
-      <Outlet /> 
+      <Outlet />
     </div>
   );
 };
