@@ -24,12 +24,13 @@ const MovieDetailsPage = () => {
     fetchMovieDetails();
   }, [movieId]);
 
-  
   const handleBack = () => {
+    
     if (location.state?.from) {
       navigate(location.state.from); 
     } else {
-      navigate(-1);  
+      
+      navigate('/movies');  
     }
   };
 
@@ -51,7 +52,19 @@ const MovieDetailsPage = () => {
 
       <div className={styles.additionalInfo}>
         <h3>More Information</h3>
-        <Link to="cast">View Cast</Link> | <Link to="reviews">View Reviews</Link>
+        <Link 
+          to="cast"
+          state={{ from: location.pathname }}  
+        >
+          View Cast
+        </Link> 
+        | 
+        <Link 
+          to="reviews"
+          state={{ from: location.pathname }}  
+        >
+          View Reviews
+        </Link>
       </div>
 
       <Outlet />
